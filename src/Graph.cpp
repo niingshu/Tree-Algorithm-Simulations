@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include <stdexcept>
 
 //constructor 
 Graph::Graph(int vertices, bool directed) 
