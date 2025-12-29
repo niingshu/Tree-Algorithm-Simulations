@@ -1,5 +1,5 @@
-#ifndef _KRUSKALS_H_
-#define _KRUSKALS_H_
+#ifndef _DIJKSTRAS_H_
+#define _DIJKSTRAS_H_
 
 #include <utility>
 #include "Graph.h"
@@ -7,15 +7,15 @@
 
 using namespace std;
 
-class Kruskals { 
+class Dijkstras { 
     public: 
-    Kruskals(); //constructor 
+    Dijkstras(); //constructor 
 
     vector<int> traverse(const Graph& graph, int start); 
 
     private: 
     vector<bool> visited; 
-    vector<int> mst;
+    vector<int> shortest;
 
 
 };
