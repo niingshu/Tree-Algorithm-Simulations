@@ -1,5 +1,6 @@
 #include "BFS.h"
 #include <queue>
+#include <stdexcept>
 
 //constructor 
 BFS::BFS() {}; 

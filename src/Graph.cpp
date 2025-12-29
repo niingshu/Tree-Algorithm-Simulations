@@ -11,7 +11,7 @@ Graph::Graph(int vertices, bool directed)
 
 //add an edge between u and v, directed then u->v, undirected add also from v to u
 void Graph::addEdge(int u, int v) { 
-    if (u < 0 || v < 0 || u > getSize() || v > getSize()) {
+    if (u < 0 || v < 0 || u >= getSize() || v >= getSize()) {
         throw out_of_range("Vertex input out of range. Please revise");
     }
 
@@ -25,7 +25,7 @@ void Graph::addEdge(int u, int v) {
 }
 
 const vector<int>& Graph::getNeigbours(int u) const {
-    if (u < 0 || u > getSize()) {
+    if (u < 0 || u >= getSize()) {
         throw out_of_range("Vertex input out of range. Please revise");
     }
 
