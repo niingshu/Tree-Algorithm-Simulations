@@ -28,8 +28,8 @@ vector<int> DFS::traverse(const Graph& graph, int start) {
 
         //push the neighbours in, inreverse order: B: A C then C in first then A 
         for (auto it = graph.getNeigbours(v).rbegin(); it != graph.getNeigbours(v).rend(); ++it) {
-            if (!visited[*it]) { //if havent visited then push, if not skip
-                s.push(*it);
+            if (!visited[it->first]) { //if havent visited then push, if not skip
+                s.push(it->first);
             }
         }
     }

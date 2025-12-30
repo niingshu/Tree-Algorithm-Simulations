@@ -21,7 +21,7 @@ vector<int> BFS::traverse(const Graph& graph, int start) {
     q.push(start);
 
     while (!q.empty()) { //while the queue is not empty
-        for (auto neigh: graph.getNeigbours(q.front())) {  //get the neighbour in the front 
+        for (auto [neigh, weight]: graph.getNeigbours(q.front())) {  //get the neighbour in the front 
             if (visited[neigh] == false) { //if hasnt been visited
             visited[neigh] = true; 
             discovery.push_back(neigh); //discovery tree
