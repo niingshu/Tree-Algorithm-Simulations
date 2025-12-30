@@ -11,11 +11,12 @@ class Kruskals {
     public: 
     Kruskals(); //constructor 
 
-    vector<int> traverse(const Graph& graph, int start); 
+    //u,v,weight. return as a vector of edges 
+    vector<tuple<int, int, int>> traverse(const Graph& graph); 
 
     private: 
     vector<bool> visited; 
-    vector<int> mst;
+    vector<tuple<int, int, int>> mst;
 
 
 };
