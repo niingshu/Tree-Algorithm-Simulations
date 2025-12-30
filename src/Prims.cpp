@@ -17,7 +17,7 @@ vector<tuple<int, int, int>> Prims::traverse(const Graph& graph, int start) {
 
     visited.assign(graph.getSize(), false);
     mst.clear();
-    priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>, greater<tuple<int,int,int>>> prQ; //pair of (weight, u, v)
+    priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>, greater<tuple<int,int,int>>> prQ; //tuple of (weight, u, v)
 
     for (auto [neigh, weight]: graph.getNeigbours(start)) {
         prQ.push({weight, neigh, start});
