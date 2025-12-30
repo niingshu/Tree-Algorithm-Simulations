@@ -15,9 +15,10 @@ class Kruskals {
     vector<tuple<int, int, int>> traverse(const Graph& graph); 
 
     private: 
-    vector<bool> visited; 
+    //disjoint-set: parents for find operations, path compression
+    vector<int> parents; 
+    vector<int> rank;
     vector<tuple<int, int, int>> mst;
-
 
 };
 
