@@ -17,8 +17,11 @@ class Kruskals {
     private: 
     //disjoint-set: parents for find operations, path compression
     vector<int> parents; 
-    vector<int> rank;
+    vector<int> rank; //height
     vector<tuple<int, int, int>> mst;
+
+    int find(int u); 
+    void unionSet(int u, int v);
 
 };
 
