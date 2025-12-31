@@ -11,12 +11,15 @@ class Dijkstras {
     public: 
     Dijkstras(); //constructor 
 
-    vector<int> traverse(const Graph& graph, int start); 
+    vector<int> traverse(const Graph& graph, int start); //neigh, weight
 
     private: 
     vector<bool> visited; 
+    vector<int> track;
     vector<int> shortest;
+    vector<int> distance; 
 
+    int find(int v);
 
 };
 
