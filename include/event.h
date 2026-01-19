@@ -2,16 +2,16 @@
 #include <vector>
 
 enum class Action {
-    VISIT_NODE = 1;
-    DISCOVERY_EDGE = 2;
-    ADD_TO_TREE = 3;
-    RELAX_EDGE = 4;
-}
+    VISIT_NODE = 1,
+    DISCOVERY_EDGE = 2,
+    ADD_TO_TREE = 3,
+    RELAX_EDGE = 4
+};
 
 struct Event {
     Action action;
-    int u;
-    int v;
+    int u; //source vertex
+    int v; //target vertex
     int weight = 0; //stored as default
 }
 
