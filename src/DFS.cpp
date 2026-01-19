@@ -9,7 +9,7 @@ vector<int> DFS::traverse(const Graph& graph, int start) {
     if (start < 0 || start >= graph.getSize()) 
         throw out_of_range("Vertex input out of range. Please revise");
 
-    //clear the list for visited and discory if traverse is being called multiple times 
+    //clear the list for visited and discovery if traverse is being called multiple times
     visited.clear();
     visited.assign(graph.getSize(), false);
     discovery.clear();

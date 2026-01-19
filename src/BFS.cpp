@@ -10,7 +10,7 @@ vector<int> BFS::traverse(const Graph& graph, int start) {
     if (start < 0 || start >= graph.getSize()) 
         throw out_of_range("Vertex input out of range. Please revise");
 
-    //clear the list for visited and discory if traverse is being called multiple times 
+    //clear the list for visited and discovery if traverse is being called multiple times
     visited.clear();
     visited.assign(graph.getSize(), false);
     discovery.clear();
@@ -22,7 +22,7 @@ vector<int> BFS::traverse(const Graph& graph, int start) {
 
     while (!q.empty()) { //while the queue is not empty
         for (auto [neigh, weight]: graph.getNeigbours(q.front())) {  //get the neighbour in the front 
-            if (visited[neigh] == false) { //if hasnt been visited
+            if (visited[neigh] == false) { //if hasn't been visited
             visited[neigh] = true; 
             discovery.push_back(neigh); //discovery tree
             q.push(neigh);
