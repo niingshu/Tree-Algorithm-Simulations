@@ -11,7 +11,7 @@ class DFS {
     public: 
     DFS(); //constructor 
 
-    vector<int> traverse(const Graph& graph, int start); 
+    vector<int> traverse(const Graph& graph, int start, EventRecorder& recorder);
 
     private: 
     vector<bool> visited; 
