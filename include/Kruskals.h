@@ -1,9 +1,9 @@
 #ifndef _KRUSKALS_H_
 #define _KRUSKALS_H_
 
-#include <utility>
 #include "Graph.h"
 #include <vector>
+#include "event.h"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ class Kruskals {
     Kruskals(); //constructor 
 
     //u,v,weight. return as a vector of edges 
-    vector<tuple<int, int, int>> traverse(const Graph& graph); 
+    vector<tuple<int, int, int>> traverse(const Graph& graph, EventRecord& recorder);
 
     private: 
     //disjoint-set: parents for find operations, path compression

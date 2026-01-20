@@ -1,8 +1,8 @@
 #include "Kruskals.h"
-#include <stdexcept>
 #include <queue>
 #include <tuple> 
-#include <functional> //to change it into min heap 
+#include <functional> //to change it into min heap
+#include "event.h"
 
 //constructor 
 Kruskals::Kruskals() {};
@@ -30,7 +30,7 @@ void Kruskals::unionSet(int u, int v) {
     }
 }
 
-vector<tuple<int, int, int>> Kruskals::traverse(const Graph& graph) {
+vector<tuple<int, int, int>> Kruskals::traverse(const Graph& graph, EventRecord& recorder) {
     parents.resize(graph.getSize());
     for (int i = 0; i < graph.getSize(); i++) {
         parents[i] = i;
@@ -43,7 +43,8 @@ vector<tuple<int, int, int>> Kruskals::traverse(const Graph& graph) {
     for (int i = 0; i < size; i++) {
         for (auto [neigh, weight]: graph.getNeighbours(i)) {
             if (i < neigh) {
-                prQ.push({weight, i, neigh});
+                prQ.push({weight, i, neigh}); //from i to neigh
+                recorder.record(Action::DISCOVERY_EDGE, i, neigh, weight);
             }
         }
     } //push all in 
@@ -54,7 +55,10 @@ vector<tuple<int, int, int>> Kruskals::traverse(const Graph& graph) {
 
         if (find(u) != find(v)) { //different parents
             unionSet(u, v);
+            recorder.record(Action::ADD_TO_TREE, u, v, weight);
             mst.push_back(make_tuple(u, v, weight));
+        } else {
+            recorder.record(Action::RELAX_EDGE, u, v, weight);
         }
     }
 
