@@ -8,6 +8,14 @@ enum class Action {
     RELAX_EDGE = 4
 };
 
+enum class EventType {
+    BFS = 1,
+    DFS = 2,
+    DIJKSTRA = 3,
+    KRUSKALS = 4,
+    PRIMS = 5
+};
+
 struct Event {
     Action action;
     int u; //source vertex
