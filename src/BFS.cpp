@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 //constructor 
-BFS::BFS() {}; 
+BFS::BFS() = default;
 
 //runs and returns the vector of discovery tree 
 vector<int> BFS::traverse(const Graph& graph, int start, EventRecord& recorder) {

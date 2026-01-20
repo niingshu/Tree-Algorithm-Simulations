@@ -4,6 +4,7 @@
 #include <utility>
 #include "Graph.h"
 #include <vector>
+#include "event.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ class Prims {
     Prims(); //constructor 
 
     //u,v,weight. return as a vector of edges 
-    vector<tuple<int, int, int>> traverse(const Graph& graph, int start); 
+    vector<tuple<int, int, int>> traverse(const Graph& graph, int start, EventRecord& recorder);
 
     private: 
     vector<bool> visited; 
