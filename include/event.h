@@ -13,10 +13,13 @@ struct Event {
     int u; //source vertex
     int v; //target vertex
     int weight = 0; //stored as default
+};
 
 class EventRecord {
-    public:
+public:
+    std::vector<Event> events;
 
     void record(Action action, int u = -1, int v = -1, int weight = 0) {
         events.push_back({action, u, v});
     }
+};
