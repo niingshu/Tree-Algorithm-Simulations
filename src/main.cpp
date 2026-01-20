@@ -1,9 +1,9 @@
-#include "include/Graph.h"
-#include "include/BFS.h"
-#include "include/DFS.h"
-#include "include/Prims.h"
-#include "include/Kruskals.h"
-#include "include/Dijkstras.h"
+#include "../include/Graph.h"
+#include "../include/BFS.h"
+#include "../include/DFS.h"
+#include "../include/Prims.h"
+#include "../include/Kruskals.h"
+#include "../include/Dijkstras.h"
 #include <tuple>
 #include <iostream>
 
