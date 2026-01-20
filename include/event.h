@@ -22,6 +22,7 @@ struct Event {
     int u; //source vertex
     int v; //target vertex
     int weight = 0; //stored as default
+    int step; //record which step we are at for rewind
 };
 
 class EventRecord {
