@@ -1,14 +1,14 @@
 #pragma once //make sure that the file is included only once
 #include <vector>
 
-enum class Action {
+enum class Action : int {
     VISIT_NODE = 1,
     DISCOVERY_EDGE = 2,
     ADD_TO_TREE = 3,
     RELAX_EDGE = 4
 };
 
-enum class EventType {
+enum class Algorithm : int {
     BFS = 1,
     DFS = 2,
     DIJKSTRA = 3,
@@ -18,6 +18,7 @@ enum class EventType {
 
 struct Event {
     Action action;
+    Algorithm algorithm;
     int u; //source vertex
     int v; //target vertex
     int weight = 0; //stored as default
