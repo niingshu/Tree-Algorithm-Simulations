@@ -17,8 +17,8 @@ enum class Algorithm : int {
 };
 
 struct Event {
-    Action action;
     Algorithm algorithm;
+    Action action;
     int u; //source vertex
     int v; //target vertex
     int weight = 0; //stored as default
@@ -28,7 +28,7 @@ class EventRecord {
 public:
     std::vector<Event> events;
 
-    void record(Action action, int u = -1, int v = -1, int weight = 0) {
-        events.push_back({action, u, v});
+    void record(Algorithm algorithm, Action action, int u = -1, int v = -1, int weight = 0) {
+        events.push_back({algorithm, action, u, v});
     }
 };

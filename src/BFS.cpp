@@ -19,20 +19,20 @@ vector<int> BFS::traverse(const Graph& graph, int start, EventRecord& recorder) 
     visited[start] = true; //marked as visited
     discovery.push_back(start);
     q.push(start);
-    recorder.record(Action::VISIT_NODE, start);
+    recorder.record(Algorithm::BFS, Action::VISIT_NODE, start);
 
     while (!q.empty()) { //while the queue is not empty
         int source = q.front();
         for (auto [neigh, weight]: graph.getNeighbours(source)) {  //get the neighbour in the front
             if (visited[neigh] == false) { //if hasn't been visited
                 visited[neigh] = true;
-                recorder.record(Action::VISIT_NODE, -1, neigh); //node being visit
+                recorder.record(Algorithm::BFS, Action::VISIT_NODE, -1, neigh); //node being visit
                 discovery.push_back(neigh); //discovery tree
-                recorder.record(Action::DISCOVERY_EDGE, source, neigh, weight);
-                recorder.record(Action::ADD_TO_TREE, source, neigh, weight);
+                recorder.record(Algorithm::BFS, Action::DISCOVERY_EDGE, source, neigh, weight);
+                recorder.record(Algorithm::BFS, Action::ADD_TO_TREE, source, neigh, weight);
                 q.push(neigh);
             } else {
-                recorder.record(Action::RELAX_EDGE, source, neigh, weight);
+                recorder.record(Algorithm::BFS, Action::RELAX_EDGE, source, neigh, weight);
             }
         }
         q.pop();

@@ -44,7 +44,7 @@ vector<tuple<int, int, int>> Kruskals::traverse(const Graph& graph, EventRecord&
         for (auto [neigh, weight]: graph.getNeighbours(i)) {
             if (i < neigh) {
                 prQ.push({weight, i, neigh}); //from i to neigh
-                recorder.record(Action::DISCOVERY_EDGE, i, neigh, weight);
+                recorder.record(Algorithm::KRUSKALS, Action::DISCOVERY_EDGE, i, neigh, weight);
             }
         }
     } //push all in 
@@ -55,10 +55,10 @@ vector<tuple<int, int, int>> Kruskals::traverse(const Graph& graph, EventRecord&
 
         if (find(u) != find(v)) { //different parents
             unionSet(u, v);
-            recorder.record(Action::ADD_TO_TREE, u, v, weight);
+            recorder.record(Algorithm::KRUSKALS, Action::ADD_TO_TREE, u, v, weight);
             mst.push_back(make_tuple(u, v, weight));
         } else {
-            recorder.record(Action::RELAX_EDGE, u, v, weight);
+            recorder.record(Algorithm::KRUSKALS, Action::RELAX_EDGE, u, v, weight);
         }
     }
 

@@ -28,22 +28,22 @@ vector<tuple<int, int, int>> Prims::traverse(const Graph& graph, int start, Even
         prQ.push({weight, start, neigh});
     }
     visited[start] = true;
-    recorder.record(Action::VISIT_NODE, -1, start);
+    recorder.record(Algorithm::PRIMS, Action::VISIT_NODE, -1, start);
 
     while (!prQ.empty() && mst.size() < graph.getSize() - 1) {
         auto [weight, u, v] = prQ.top(); //from u to v
         prQ.pop(); 
-        recorder.record(Action::DISCOVERY_EDGE, u, v, weight);
+        recorder.record(Algorithm::PRIMS, Action::DISCOVERY_EDGE, u, v, weight);
 
         if (visited[v]) {
-            recorder.record(Action::RELAX_EDGE, u, v, weight);
+            recorder.record(Algorithm::PRIMS, Action::RELAX_EDGE, u, v, weight);
             continue;
         }
 
         mst.push_back(make_tuple(u, v, weight));
         visited[v] = true;
-        recorder.record(Action::VISIT_NODE, -1, v);
-        recorder.record(Action::ADD_TO_TREE, u, v, weight);
+        recorder.record(Algorithm::PRIMS, Action::VISIT_NODE, -1, v);
+        recorder.record(Algorithm::PRIMS, Action::ADD_TO_TREE, u, v, weight);
 
         //push the next ones in 
         for (auto [neigh, w]: graph.getNeighbours(u)) {

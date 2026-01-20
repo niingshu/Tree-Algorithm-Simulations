@@ -33,22 +33,22 @@ vector<int> Dijkstras::traverse(const Graph& graph, int start, EventRecord& reco
         if (visited[u]) continue; //stop the current iteration and jump to the next one
 
         visited[u] = true;
-        recorder.record(Action::VISIT_NODE, -1, u);
+        recorder.record(Algorithm::DIJKSTRA, Action::VISIT_NODE, -1, u);
 
         if (track[u] != -1) {
-            recorder.record(Action::ADD_TO_TREE, track[u], u,
+            recorder.record(Algorithm::DIJKSTRA, Action::ADD_TO_TREE, track[u], u,
                 distance[u] - distance[track[u]]);
         }
 
         for (auto [adjVer, weight]: graph.getNeighbours(u)) {
-                recorder.record(Action::DISCOVERY_EDGE, u, adjVer, weight);
+                recorder.record(Algorithm::DIJKSTRA, Action::DISCOVERY_EDGE, u, adjVer, weight);
 
                 if (!visited[adjVer] && distance[u] + weight < distance[adjVer]) { 
                     distance[adjVer] = distance[u] + weight; 
                     track[adjVer] = u; //track path from u is to adjVer
                     prQ.push({distance[adjVer], adjVer});
                 } else {
-                    recorder.record(Action::RELAX_EDGE, u, adjVer, weight);
+                    recorder.record(Algorithm::DIJKSTRA, Action::RELAX_EDGE, u, adjVer, weight);
                 }
 
         }
