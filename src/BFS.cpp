@@ -6,8 +6,8 @@
 BFS::BFS() {}; 
 
 //runs and returns the vector of discovery tree 
-vector<int> BFS::traverse(const Graph& graph, int start) {
-    if (start < 0 || start >= graph.getSize()) 
+vector<int> BFS::traverse(const Graph& graph, int start, EventRecord& recorder) {
+    if (start < 0 || start >= graph.getSize())
         throw out_of_range("Vertex input out of range. Please revise");
 
     //clear the list for visited and discovery if traverse is being called multiple times
@@ -15,17 +15,24 @@ vector<int> BFS::traverse(const Graph& graph, int start) {
     visited.assign(graph.getSize(), false);
     discovery.clear();
 
-    queue<int> q; 
+    queue<int> q;
     visited[start] = true; //marked as visited
     discovery.push_back(start);
     q.push(start);
+    recorder.record(Action::VISIT_NODE, start);
 
     while (!q.empty()) { //while the queue is not empty
-        for (auto [neigh, weight]: graph.getNeigbours(q.front())) {  //get the neighbour in the front 
+        int source = q.front();
+        for (auto [neigh, weight]: graph.getNeighbours(source)) {  //get the neighbour in the front
             if (visited[neigh] == false) { //if hasn't been visited
-            visited[neigh] = true; 
-            discovery.push_back(neigh); //discovery tree
-            q.push(neigh);
+                visited[neigh] = true;
+                recorder.record(Action::VISIT_NODE, -1, neigh); //node being visit
+                discovery.push_back(neigh); //discovery tree
+                recorder.record(Action::DISCOVERY_EDGE, source, neigh, weight);
+                recorder.record(Action::ADD_TO_TREE, source, neigh, weight);
+                q.push(neigh);
+            } else {
+                recorder.record(Action::RELAX_EDGE, source, neigh, weight);
             }
         }
         q.pop();

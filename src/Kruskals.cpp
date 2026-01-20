@@ -41,7 +41,7 @@ vector<tuple<int, int, int>> Kruskals::traverse(const Graph& graph) {
 
     int size = graph.getSize();
     for (int i = 0; i < size; i++) {
-        for (auto [neigh, weight]: graph.getNeigbours(i)) {
+        for (auto [neigh, weight]: graph.getNeighbours(i)) {
             if (i < neigh) {
                 prQ.push({weight, i, neigh});
             }

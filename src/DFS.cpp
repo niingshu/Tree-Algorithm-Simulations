@@ -29,7 +29,7 @@ vector<int> DFS::traverse(const Graph& graph, int start, EventRecorder& recorder
         }
 
         //push the neighbours in, inreverse order: B: A C then C in first then A 
-        for (auto it = graph.getNeigbours(v).rbegin(); it != graph.getNeigbours(v).rend(); ++it) {
+        for (auto it = graph.getNeighbours(v).rbegin(); it != graph.getNeighbours(v).rend(); ++it) {
             int neighbor = it->first;
             int weight = it->second;
             recorder.record (Action::DISCOVERY_EDGE, v, neighbor, weight);

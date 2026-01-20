@@ -25,7 +25,7 @@ void Graph::addEdge(int u, int v, int weight) {
 
 }
 
-const vector<pair<int,int>>& Graph::getNeigbours(int u) const {
+const vector<pair<int,int>>& Graph::getNeighbours(int u) const {
     if (u < 0 || u >= getSize()) {
         throw out_of_range("Vertex input out of range. Please revise");
     }

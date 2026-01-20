@@ -12,7 +12,7 @@ class Graph {
     Graph(int vertices, bool directed = false); //set to undirected graph
     
     void addEdge(int u, int v, int weight); //add new edges
-    const vector<pair<int,int>>& getNeigbours(int u) const; //for bfs and dfs 
+    const vector<pair<int,int>>& getNeighbours(int u) const; //for bfs and dfs
     int getSize() const;
 
     private: 

@@ -30,7 +30,7 @@ vector<int> Dijkstras::traverse(const Graph& graph, int start) {
 
         if (!visited[u]) { //if the vertex is not visited
             visited[u] = true; 
-            for (auto [adjVer, weight]: graph.getNeigbours(u)) {
+            for (auto [adjVer, weight]: graph.getNeighbours(u)) {
                 if (!visited[adjVer] && distance[u] + weight < distance[adjVer]) { 
                     distance[adjVer] = distance[u] + weight; 
                     track[adjVer] = u; //track path from u is to adjVer
