@@ -4,6 +4,7 @@
 #include <utility>
 #include "Graph.h"
 #include <vector>
+#include "event.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ class Dijkstras {
     public: 
     Dijkstras(); //constructor 
 
-    vector<int> traverse(const Graph& graph, int start); //neigh, weight
+    vector<int> traverse(const Graph& graph, int start, EventRecord& recorder); //neigh, weight
 
     private: 
     vector<bool> visited; 

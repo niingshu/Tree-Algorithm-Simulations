@@ -1,7 +1,8 @@
 #include "Dijkstras.h"
 #include <stdexcept>
 #include <queue> 
-#include <functional> //to change it into min heap 
+#include <functional> //to change it into min heap
+#include "event.h"
 
 Dijkstras::Dijkstras() {}; //constructor 
 
@@ -11,7 +12,7 @@ int Dijkstras::find(int v) { //v is the vertex, from v to i
     }
 }
 
-vector<int> Dijkstras::traverse(const Graph& graph, int start) {
+vector<int> Dijkstras::traverse(const Graph& graph, int start, EventRecord& recorder) {
     int size = graph.getSize();
     if (start < 0 || start >= size)
         throw out_of_range("Vertex input out of range. Please revise");
@@ -28,16 +29,31 @@ vector<int> Dijkstras::traverse(const Graph& graph, int start) {
         auto [dist, u] = prQ.top();
         prQ.pop();
 
-        if (!visited[u]) { //if the vertex is not visited
-            visited[u] = true; 
-            for (auto [adjVer, weight]: graph.getNeighbours(u)) {
+        if (dist > distance[u]) continue; //move to the next iteration
+        if (visited[u]) continue; //stop the current iteration and jump to the next one
+
+        visited[u] = true;
+        recorder.record(Action::VISIT_NODE, -1, u);
+
+        if (track[u] != -1) {
+            recorder.record(Action::ADD_TO_TREE, track[u], u,
+                distance[u] - distance[track[u]]);
+        }
+
+        for (auto [adjVer, weight]: graph.getNeighbours(u)) {
+                recorder.record(Action::DISCOVERY_EDGE, u, adjVer, weight);
+
                 if (!visited[adjVer] && distance[u] + weight < distance[adjVer]) { 
                     distance[adjVer] = distance[u] + weight; 
                     track[adjVer] = u; //track path from u is to adjVer
                     prQ.push({distance[adjVer], adjVer});
+                } else {
+                    recorder.record(Action::RELAX_EDGE, u, adjVer, weight);
                 }
-            }
+
         }
+
+
     }
 
     return track;
