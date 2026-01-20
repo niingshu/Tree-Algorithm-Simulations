@@ -4,9 +4,9 @@
 #include "event.h"
 
 //constructor 
-DFS::DFS() {};
+DFS::DFS() = default;
 
-vector<int> DFS::traverse(const Graph& graph, int start, EventRecorder& recorder) {
+vector<int> DFS::traverse(const Graph& graph, int start, EventRecord& recorder) {
     if (start < 0 || start >= graph.getSize()) 
         throw out_of_range("Vertex input out of range. Please revise");
 
@@ -25,7 +25,7 @@ vector<int> DFS::traverse(const Graph& graph, int start, EventRecorder& recorder
         if (!visited[v]) { //havent visited yet
             visited[v] = true; 
             discovery.push_back(v);
-            recorder.record(Action::VISIT_NODE, v) //VISIT_NODE
+            recorder.record(Action::VISIT_NODE, v); //VISIT_NODE
         }
 
         //push the neighbours in, inreverse order: B: A C then C in first then A 

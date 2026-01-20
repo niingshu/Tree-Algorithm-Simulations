@@ -4,6 +4,7 @@
 #include <utility>
 #include "Graph.h"
 #include <vector>
+#include "event.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ class DFS {
     public: 
     DFS(); //constructor 
 
-    vector<int> traverse(const Graph& graph, int start, EventRecorder& recorder);
+    vector<int> traverse(const Graph& graph, int start, EventRecord& recorder);
 
     private: 
     vector<bool> visited; 
