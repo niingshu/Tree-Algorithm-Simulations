@@ -24,6 +24,10 @@ const vector<Event>& EventLog::getEvents() const {
     return events;
 }
 
+const Algorithm &EventLog::getAlgorithm() const {
+    return algorithm;
+}
+
 void EventLog::clear() {
     events.clear();
     stepCounter = 0;

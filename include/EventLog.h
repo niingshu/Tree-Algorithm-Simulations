@@ -19,6 +19,8 @@ class EventLog {
 
     const vector<Event>& getEvents() const;
 
+    const Algorithm& getAlgorithm() const;
+
     void clear();
 
     private:
