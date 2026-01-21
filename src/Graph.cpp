@@ -2,8 +2,8 @@
 #include <stdexcept>
 
 //constructor 
-Graph::Graph(int vertices, bool directed) 
-    : adjList(vertices), isDirected(directed)
+Graph::Graph(string name, int vertices, bool directed)
+    : graphName(name), adjList(vertices), isDirected(directed)
 {
     if (vertices <= 0) {
         throw invalid_argument("Number of vertices must be positive");
@@ -36,4 +36,14 @@ const vector<pair<int,int>>& Graph::getNeighbours(int u) const {
 //size of the graph
 int Graph::getSize() const {
     return adjList.size();
+}
+
+//get the name of graph
+string Graph::getName() const {
+    return graphName;
+}
+
+//get if the graph is directed or not
+bool Graph::getDirected() const {
+    return isDirected;
 }

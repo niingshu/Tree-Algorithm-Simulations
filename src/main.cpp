@@ -9,7 +9,7 @@
 
 int main() {
     //build graph 
-    Graph g = Graph(6, false);
+    Graph g = Graph("first",6, false);
     g.addEdge(0, 1, 4); 
     g.addEdge(1, 2, 8);
     g.addEdge(2, 3, 4);
@@ -23,8 +23,9 @@ int main() {
     g.addEdge(3, 5, 2);
 
     //runs algorithm 
-    Kruskals algo; 
-    vector<tuple<int, int, int>> path = algo.traverse(g); //weight, u, v
+    Kruskals algo;
+    EventRecord record;
+    vector<tuple<int, int, int>> path = algo.traverse(g, record); //weight, u, v
 
     //print path 
     cout << "print path: " << endl;

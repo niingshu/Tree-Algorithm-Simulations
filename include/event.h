@@ -28,7 +28,6 @@ struct Event {
 class EventRecord {
 public:
     std::vector<Event> events;
-
     void record(Algorithm algorithm, Action action, int u = -1, int v = -1, int weight = 0) {
         events.push_back({algorithm, action, u, v});
     }

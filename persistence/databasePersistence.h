@@ -8,6 +8,7 @@
 #pragma once
 #include <sqlite3.h>
 #include "EventLog.h"
+#include "Graph.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ class databasePersistence {
 
     int saveRun(int graphId, const EventLog& event_log);
     //returns run_id
+    int saveGraph(const Graph& graph);
 
     private: //remember what -> keeping the connection with database
     sqlite3* database;

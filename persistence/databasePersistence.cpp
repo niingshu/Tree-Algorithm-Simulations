@@ -4,10 +4,28 @@
 
 #include "databasePersistence.h"
 #include "EventLog.h"
+#include "Graph.h"
 
 //constructor
 databasePersistence::databasePersistence(sqlite3 *database)
     : database(database) {}
+
+int databasePersistence::saveGraph(const Graph& graph) { //used when the user first called the program
+    const char *sql =
+        "INSERT INTO graphs (name, directed, created_at) "
+        "VALUES (?, ?, date('now')); ";
+
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(database, sql, -1, &stmt, nullptr);
+
+    sqlite3_bind_text(stmt, 1, graph.getName().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_int(stmt, 2, graph.getDirected());
+
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+
+    return static_cast<int> (sqlite3_last_insert_rowid(database)); //return the graph_id
+}
 
 //insert a row into runs table, return the run_id
 int databasePersistence::insertRun(int graphId, Algorithm algorithm) {

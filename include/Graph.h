@@ -9,11 +9,13 @@ using namespace std;
 
 class Graph {
     public: 
-    Graph(int vertices, bool directed = false); //set to undirected graph
+    Graph(string graphName, int vertices, bool directed = false); //set to undirected graph
     
     void addEdge(int u, int v, int weight); //add new edges
     const vector<pair<int,int>>& getNeighbours(int u) const; //for bfs and dfs
     int getSize() const;
+    string getName() const;
+    bool getDirected() const;
 
     private: 
     //vertices list, each connect to a list of its adjacent vertices 
@@ -22,6 +24,7 @@ class Graph {
     //update so it takes in weight also 
     vector<vector<pair<int,int>>> adjList; 
     bool isDirected;
+    string graphName;
     // directed or undirected graph
 };
 

@@ -10,6 +10,7 @@ int Dijkstras::find(int v) { //v is the vertex, from v to i
     for (int i = 0; i < track.size(); i++) {
         if (track[i] == v) return i; //from v to i
     }
+    return -1;
 }
 
 vector<int> Dijkstras::traverse(const Graph& graph, int start, EventRecord& recorder) {
