@@ -5,7 +5,7 @@
 #ifndef TREE_ALGORITHM_SIMULATIONS_EVENLOG_H
 #define TREE_ALGORITHM_SIMULATIONS_EVENLOG_H
 
-#pragma once
+
 #include <vector>
 #include "event.h"
 
