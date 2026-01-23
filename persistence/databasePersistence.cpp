@@ -104,3 +104,20 @@ int databasePersistence::saveRun(int graphId, const EventLog& event_log) {
     return runId; //indicating which run is just being saved
 }
 
+int databasePersistence::saveGraphwithEdges(const Graph& graph) {
+    //for each run, call to insert run and call
+    sqlite3_exec(database, "BEGIN TRANSACTION;", nullptr, nullptr, nullptr);
+
+    int graphId = insertGraph(graph);
+
+    for (int u = 0; u < graph.getSize(); u++) {
+        for (auto [v, w]: graph.getNeighbours(u)) {
+            insertEdge(graphId, u, v, w);
+        }
+    }
+
+    sqlite3_exec(database, "COMMIT;", nullptr, nullptr, nullptr);
+    return graphId; //indicating which graph is just being saved
+
+}
+

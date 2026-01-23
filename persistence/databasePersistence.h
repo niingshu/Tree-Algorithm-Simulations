@@ -21,6 +21,9 @@ class databasePersistence {
     //returns run_id
     int insertGraph(const Graph& graph);
 
+    //save the graph to db
+    int saveGraphwithEdges(const Graph& graph);
+
     private: //remember what -> keeping the connection with database
     sqlite3* database;
 
