@@ -19,7 +19,6 @@ class databasePersistence {
 
     int saveRun(int graphId, const EventLog& event_log);
     //returns run_id
-    int insertGraph(const Graph& graph);
 
     //save the graph to db
     int saveGraphwithEdges(const Graph& graph);
@@ -32,6 +31,7 @@ class databasePersistence {
     void insertEvent(int runId, const Event& event);
     //insert many rows into the steps table, update on db
     void insertEdge(int graphId, int u, int v, int weight);
+    int insertGraph(const Graph& graph);
 };
 
 
