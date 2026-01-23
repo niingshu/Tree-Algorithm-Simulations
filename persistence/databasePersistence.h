@@ -19,7 +19,7 @@ class databasePersistence {
 
     int saveRun(int graphId, const EventLog& event_log);
     //returns run_id
-    int saveGraph(const Graph& graph);
+    int insertGraph(const Graph& graph);
 
     private: //remember what -> keeping the connection with database
     sqlite3* database;
@@ -28,6 +28,7 @@ class databasePersistence {
     //insert a row into runs table, return the run_id
     void insertEvent(int runId, const Event& event);
     //insert many rows into the steps table, update on db
+    void insertEdge(int graphId, int u, int v, int weight);
 };
 
 

@@ -10,7 +10,7 @@
 databasePersistence::databasePersistence(sqlite3 *database)
     : database(database) {}
 
-int databasePersistence::saveGraph(const Graph& graph) { //used when the user first called the program
+int databasePersistence::insertGraph(const Graph& graph) { //used when the user first called the program
     const char *sql =
         "INSERT INTO graphs (name, directed, created_at) "
         "VALUES (?, ?, date('now')); ";
@@ -25,6 +25,23 @@ int databasePersistence::saveGraph(const Graph& graph) { //used when the user fi
     sqlite3_finalize(stmt);
 
     return static_cast<int> (sqlite3_last_insert_rowid(database)); //return the graph_id
+}
+
+void databasePersistence::insertEdge(int graphId, int u, int v, int weight) {
+    const char *sql =
+        "INSERT INTO edges (graph_id, u, v, weight) "
+        "VALUES (?, ?, ?, ?); ";
+
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(database, sql, -1, &stmt, nullptr);
+
+    sqlite3_bind_int(stmt, 1, graphId);
+    sqlite3_bind_int(stmt, 2, u);
+    sqlite3_bind_int(stmt, 3, v);
+    sqlite3_bind_int(stmt, 4, weight);
+
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
 }
 
 //insert a row into runs table, return the run_id
@@ -44,7 +61,7 @@ int databasePersistence::insertRun(int graphId, Algorithm algorithm) {
     sqlite3_bind_int(stmt, 2, static_cast<int>(algorithm));
 
     //execute the statement using
-    sqlite3_step(stmt); //execute prepared statment
+    sqlite3_step(stmt); //execute prepared statement
     sqlite3_finalize(stmt); //destroy prepared statement
 
     return static_cast<int> (sqlite3_last_insert_rowid(database));
