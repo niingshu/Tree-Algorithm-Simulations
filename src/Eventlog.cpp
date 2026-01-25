@@ -9,13 +9,13 @@ EventLog::EventLog(Algorithm algorithm, int graphId)
     : algorithm(algorithm), graphId(graphId), stepCounter(0) {}
 
 void EventLog::record(Algorithm algorithm, Action action, int u, int v, int weight) {
-    Event e;
-    e.algorithm = algorithm;
-    e.action = action;
-    e.u = u;
-    e.v = v;
-    e.weight = weight;
-    e.step = stepCounter++;
+    Event e(
+    e.algorithm = algorithm,
+    e.action = action,
+    e.u = u,
+    e.v = v,
+    e.weight = weight,
+    e.step = stepCounter++);
 
     events.push_back(e);
 }

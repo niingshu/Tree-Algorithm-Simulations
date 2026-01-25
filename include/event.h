@@ -23,12 +23,15 @@ struct Event {
     int v; //target vertex
     int weight = 0; //stored as default
     int step; //record which step we are at for rewind
+
+    Event(Algorithm algorithm, Action action, int u, int v, int weight, int step)
+        : algorithm(algorithm), action(action), u(u), v(v), weight(weight), step(step) {}
 };
 
 class EventRecord {
 public:
     std::vector<Event> events;
-    void record(Algorithm algorithm, Action action, int u = -1, int v = -1, int weight = 0) {
-        events.push_back({algorithm, action, u, v});
+    void record(Algorithm algorithm, Action action, int u = -1, int v = -1, int weight = 0, int step = 0) {
+        events.push_back({algorithm, action, u, v, weight, step});
     }
 };

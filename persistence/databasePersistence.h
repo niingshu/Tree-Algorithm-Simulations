@@ -9,6 +9,7 @@
 #include <sqlite3.h>
 #include "EventLog.h"
 #include "Graph.h"
+#include <vector>
 
 using namespace std;
 
@@ -17,11 +18,17 @@ class databasePersistence {
     explicit databasePersistence(sqlite3* database);
     //tell the compiler to only explicitly use this constructor when being called
 
-    int saveRun(int graphId, const EventLog& event_log);
     //returns run_id
-
+    int saveRun(int graphId, const EventLog& event_log);
     //save the graph to db
     int saveGraphwithEdges(const Graph& graph);
+    //load graph from db
+    Graph loadGraph(int graphId);
+    //load the events ran on this runid
+    vector<Event> loadEvents(int runId);
+    //load the list of runs for a graph
+    vector<int> getRuns(int graphId);
+
 
     private: //remember what -> keeping the connection with database
     sqlite3* database;

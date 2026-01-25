@@ -19,7 +19,7 @@ class Graph {
 
     private: 
     //vertices list, each connect to a list of its adjacent vertices 
-    //outter vector is the vertex at index a 
+    //outer vector is the vertex at index a
     //adjList[a] is a list of vertices adjacent to u and the weight 
     //update so it takes in weight also 
     vector<vector<pair<int,int>>> adjList; 

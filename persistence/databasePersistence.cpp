@@ -5,6 +5,8 @@
 #include "databasePersistence.h"
 #include "EventLog.h"
 #include "Graph.h"
+#include <vector>
+#include <tuple>
 
 //constructor
 databasePersistence::databasePersistence(sqlite3 *database)
@@ -120,4 +122,122 @@ int databasePersistence::saveGraphwithEdges(const Graph& graph) {
     return graphId; //indicating which graph is just being saved
 
 }
+
+Graph databasePersistence::loadGraph(int graphId) {
+    //to construct a graph, need string graphName, int vertices, bool directed
+    const char *sql1 =
+        "SELECT name, directed FROM graphs where id = ?; ";
+
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(database, sql1, -1, &stmt, nullptr);
+    sqlite3_bind_int(stmt, 1, graphId);
+
+    string graphName;
+    bool directed = false;
+
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        //check if the execution of a prepared sql statement has successfully retireved a new row
+        //or it means to check if the prepare statement actually return any new row
+        graphName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+        directed = sqlite3_column_int(stmt, 1);
+    } else {
+        throw runtime_error("Graph is not yet in database");
+    }
+
+    sqlite3_finalize(stmt);
+
+    const char *sql2 =
+        "SELECT u, v, weight FROM edges WHERE graph_id = ?; ";
+
+    sqlite3_stmt* stmt2;
+    sqlite3_prepare_v2(database, sql2, -1, &stmt2, nullptr);
+    sqlite3_bind_int(stmt2, 1, graphId);
+
+    //first, find the number of vertices
+    int maxVertex = -1; //keep track of the vertex with highest value seen
+    vector<tuple<int,int,int>> edges; //u,v,weight
+
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        int u = sqlite3_column_int(stmt, 0);
+        int v = sqlite3_column_int(stmt, 1);
+        int w = sqlite3_column_int(stmt, 2);
+
+        maxVertex = max({maxVertex, u, v, w});
+        edges.push_back({u,v,w});
+    }
+
+    sqlite3_finalize(stmt2);
+
+    //create graph
+    Graph g(graphName, maxVertex, directed);
+
+    //add the edges in
+    for (auto [u,v,w]: edges) {
+        g.addEdge(u, v, w);
+    }
+
+    return g;
+}
+
+vector<Event> databasePersistence::loadEvents(int runId) {
+    //event: algorithm, action, u,v, weight, step
+    const char *sql1 = //ake the algorithm
+        "SELECT algorithm FROM runs where id = ?; ";
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(database, sql1, -1, &stmt, nullptr);
+    sqlite3_bind_int(stmt, 1, runId);
+
+    Algorithm algorithm;
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        algorithm = static_cast<Algorithm>(sqlite3_column_int(stmt, 0));
+    } else {
+        throw runtime_error("Algorithm is not yet saved in database");
+    }
+
+    sqlite3_finalize(stmt);
+
+    const char *sql2 =
+        "SELECT step_index, action, u, v, weight FROM steps WHERE run_id = ?; ";
+    sqlite3_stmt* stmt2;
+    sqlite3_prepare_v2(database, sql2, -1, &stmt2, nullptr);
+    sqlite3_bind_int(stmt2, 1, runId);
+
+    vector<Event> events;
+
+    while (sqlite3_step(stmt2) == SQLITE_ROW) {
+
+        int step_index = sqlite3_column_int(stmt2, 0);
+        Action action = static_cast<Action>(sqlite3_column_int(stmt2, 1));
+        int u = sqlite3_column_int(stmt2, 2);
+        int v = sqlite3_column_int(stmt2, 3);
+        int w = sqlite3_column_int(stmt2, 4);
+
+        Event e(algorithm, action, u, v, w, step_index);
+        events.push_back(e);
+    }
+
+    return events;
+}
+
+vector<int> databasePersistence::getRuns(int graphId) {
+    const char *sql1 =
+        "SELECT id FROM runs WHERE graph_id = ?; ";
+
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(database, sql1, -1, &stmt, nullptr);
+    sqlite3_bind_int(stmt, 1, graphId);
+
+    vector<int> runs;
+
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        runs.push_back(sqlite3_column_int(stmt, 0));
+    }
+
+    sqlite3_finalize(stmt); //avoid leaks
+
+    return runs;
+}
+
+
+
 
