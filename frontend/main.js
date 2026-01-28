@@ -59,7 +59,8 @@ function render() {
     treeEdges.forEach(e=> {
         drawLine(
             nodes.find(n=>n.id === e.u),
-            nodes.find(n=>n.id === e.v)
+            nodes.find(n=>n.id === e.v),
+            'black'
         );
     });
 
@@ -72,23 +73,31 @@ function highlightNode(id) {
     drawNode(ctx,node.x,node.y,node.radius,'red','black',3);
 }
 
-function drawLine(n1, n2) {
+function drawLine(n1, n2, color) {
+    //draws a line (used for both discovery edge and add to tree
     ctx.beginPath();
     ctx.moveTo(n1.x, n1.y); //start point
     ctx.lineTo(n2.x, n2.y); //end point
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = color;
     ctx.lineWidth = 2;
     ctx.stroke();
     ctx.closePath();
 }
 
-function addEdge(u, v) {
-    //do not need to reset the frame (since we want to keep track of the tree)
-    treeEdges.push({u,v}); //edge from u to v
+function addEdge(u, v, weight) {
 
     const node1 = nodes.find(n=>n.id === u);
     const node2 = nodes.find(n=>n.id === v);
-    drawLine(node1, node2);
+    drawLine(node1, node2, 'black');
+}
+
+function treeEdge(u, v, weight) {
+    //do not need to reset the frame (since we want to keep track of the tree)
+    treeEdges.push({u,v, weight}); //edge from u to v
+
+    const node1 = nodes.find(n=>n.id === u);
+    const node2 = nodes.find(n=>n.id === v);
+    drawLine(node1, node2, 'red');
 
 }
 
@@ -104,7 +113,11 @@ function play(events) {
     }
 
     if (e.action === 3) { //add to tree
-        addEdge(e.u, e.v);
+        treeEdge(e.u, e.v, e.weight);
+    }
+
+    if (e.action === 2) {
+        addEdge(e.u, e.v, e.weight);
     }
 
     i++;
