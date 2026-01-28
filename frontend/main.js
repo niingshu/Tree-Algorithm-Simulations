@@ -1,3 +1,4 @@
+let treeEdges = [];
 fetch("events.json")
     .then(res => res.json())
     .then(data => {
@@ -55,6 +56,13 @@ function render() {
         drawNode(ctx, node.x, node.y, node.radius, node.color, 'black', 2, node.id);
     })
 
+    treeEdges.forEach(e=> {
+        drawLine(
+            nodes.find(n=>n.id === e.u),
+            nodes.find(n=>n.id === e.v)
+        );
+    });
+
 }
 
 function highlightNode(id) {
@@ -76,6 +84,7 @@ function drawLine(n1, n2) {
 
 function addEdge(u, v) {
     //do not need to reset the frame (since we want to keep track of the tree)
+    treeEdges.push({u,v}); //edge from u to v
 
     const node1 = nodes.find(n=>n.id === u);
     const node2 = nodes.find(n=>n.id === v);
@@ -92,6 +101,10 @@ function play(events) {
 
     if (e.action === 1) { //visit_node
         highlightNode(e.u);
+    }
+
+    if (e.action === 3) { //add to tree
+        addEdge(e.u, e.v);
     }
 
     i++;
