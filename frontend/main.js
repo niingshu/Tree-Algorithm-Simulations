@@ -60,7 +60,8 @@ function render() {
         drawLine(
             nodes.find(n=>n.id === e.u),
             nodes.find(n=>n.id === e.v),
-            'black'
+            'black',
+            e.weight
         );
     });
 
@@ -73,7 +74,7 @@ function highlightNode(id) {
     drawNode(ctx,node.x,node.y,node.radius,'red','black',3);
 }
 
-function drawLine(n1, n2, color) {
+function drawLine(n1, n2, color, weight = null) {
     //draws a line (used for both discovery edge and add to tree
     ctx.beginPath();
     ctx.moveTo(n1.x, n1.y); //start point
@@ -82,13 +83,22 @@ function drawLine(n1, n2, color) {
     ctx.lineWidth = 2;
     ctx.stroke();
     ctx.closePath();
+
+    if (weight != null) {
+        //draw weight text near the middle of the line
+        const midX = (n1.x + n2.x) /2;
+        const midY = (n1.y + n2.y) /2;
+        ctx.fillStyle = "black";
+        ctx.font = "12px Arial";
+        ctx.fillText(weight, midX, midY);
+    }
 }
 
 function addEdge(u, v, weight) {
 
     const node1 = nodes.find(n=>n.id === u);
     const node2 = nodes.find(n=>n.id === v);
-    drawLine(node1, node2, 'black');
+    drawLine(node1, node2, 'black', weight);
 }
 
 function treeEdge(u, v, weight) {
@@ -97,7 +107,7 @@ function treeEdge(u, v, weight) {
 
     const node1 = nodes.find(n=>n.id === u);
     const node2 = nodes.find(n=>n.id === v);
-    drawLine(node1, node2, 'red');
+    drawLine(node1, node2, 'red', weight);
 
 }
 
@@ -116,7 +126,7 @@ function play(events) {
         treeEdge(e.u, e.v, e.weight);
     }
 
-    if (e.action === 2) {
+    if (e.action === 2) { //discovery edge
         addEdge(e.u, e.v, e.weight);
     }
 
