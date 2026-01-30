@@ -1,4 +1,5 @@
 let treeEdges = [];
+let relaxEdges = [];
 fetch("events.json")
     .then(res => res.json())
     .then(data => {
@@ -112,12 +113,12 @@ function treeEdge(u, v, weight) {
 }
 
 function relaxEdge(u, v, weight) {
-    drawLine(
-        nodes.find(n=>n.id === u),
-        nodes.find(n=>n.id === v),
-        'gray',
-        weight
-    );
+
+    relaxEdges.push({u, v, weight});
+
+    const node1 = nodes.find(n=>n.id === u);
+    const node2 = nodes.find(n=>n.id === v);
+    drawLine(node1, node2, 'gray', weight);
 }
 
 let i = 0;
