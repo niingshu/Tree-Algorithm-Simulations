@@ -111,6 +111,15 @@ function treeEdge(u, v, weight) {
 
 }
 
+function relaxEdge(u, v, weight) {
+    drawLine(
+        nodes.find(n=>n.id === u),
+        nodes.find(n=>n.id === v),
+        'gray',
+        weight
+    );
+}
+
 let i = 0;
 
 function play(events) {
@@ -128,6 +137,10 @@ function play(events) {
 
     if (e.action === 2) { //discovery edge
         addEdge(e.u, e.v, e.weight);
+    }
+
+    if (e.action === 4) { //relax edge
+        relaxEdge(e.u, e.v, e.weight);
     }
 
     i++;
