@@ -10,6 +10,19 @@ fetch("events.json")
             JSON.stringify(data, null, 2);
     })
 
+//Click -> add nodes onto canvas
+canvas.addEventListener("click", e => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    nodes.push({
+        id: nodes.length, x, y, radius: 20, color: "blue"
+    });
+
+    render();
+});
+
 //grab the created canvas in html
 const canvas = document.getElementById("graph");
 const ctx = canvas.getContext("2d");
@@ -57,11 +70,22 @@ function render() {
         drawNode(ctx, node.x, node.y, node.radius, node.color, 'black', 2, node.id);
     })
 
+    //for all the nodes in spanning tree
     treeEdges.forEach(e=> {
         drawLine(
             nodes.find(n=>n.id === e.u),
             nodes.find(n=>n.id === e.v),
             'black',
+            e.weight
+        );
+    });
+
+    //for all the nodes not in spanning tree
+    relaxEdges.forEach(e => {
+        drawLine(
+            nodes.find(n=>n.id === e.u),
+            nodes.find(n=>n.id === e.v),
+            'gray',
             e.weight
         );
     });
