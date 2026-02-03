@@ -6,6 +6,7 @@
 #include <sqlite3.h>
 #include <nlohmann/json.hpp>
 #include <string>
+#include <iostream>
 #include <fstream>
 #include "../persistence/databasePersistence.h"
 
@@ -35,7 +36,7 @@ void JsonExporter::exportGraph(int graphId) {
         }
     }
 
-    std::ofstream file("graphRuning.json");
+    std::ofstream file("../frontend/graphRuning.json");
     //ofstream -> output file stream -> write data to files
     file << j.dump(4); //j is nlohmann::json object with
     // converts the json object to string with 4-space indentation
@@ -54,10 +55,15 @@ void JsonExporter::exportEvents(int runId) {
             {"u", event.u},
             {"v", event.v},
             {"weight", event.weight},
-            "step", event.step});
+            {"step", event.step}});
     }
 
-    std::ofstream file("events.json");
+    std::ofstream file("../frontend/events.json");
+    if (!file.is_open()) {
+        std::cerr << "Failed to open events.json for writing\n";
+        return;
+    }
     file << j.dump(4);
+    file.close();
 
 }

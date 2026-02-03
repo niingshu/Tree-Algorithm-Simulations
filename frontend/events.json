@@ -1,0 +1,44 @@
+{
+    "events": [
+        {
+            "action": 2,
+            "algorithm": 1,
+            "step": 0,
+            "u": 0,
+            "v": 1,
+            "weight": 5
+        },
+        {
+            "action": 1,
+            "algorithm": 1,
+            "step": 1,
+            "u": -1,
+            "v": 0,
+            "weight": 0
+        },
+        {
+            "action": 1,
+            "algorithm": 1,
+            "step": 2,
+            "u": -1,
+            "v": 2,
+            "weight": 0
+        },
+        {
+            "action": 3,
+            "algorithm": 1,
+            "step": 3,
+            "u": 0,
+            "v": 1,
+            "weight": 5
+        },
+        {
+            "action": 3,
+            "algorithm": 1,
+            "step": 4,
+            "u": 1,
+            "v": 2,
+            "weight": 3
+        }
+    ]
+}

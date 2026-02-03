@@ -1,7 +1,7 @@
-const canvas = document.getElementById("graph");
-const ctx = canvas.getContext("2d");
 
 export function clearCanvas() {
+    const canvas = document.getElementById("graph");
+    const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -29,4 +29,22 @@ export function drawNode(ctx, x, y, radius, fill, stroke, strokeWidth, id) {
     ctx.textBaseline = "middle";
     ctx.fillText(id,x,y);
 
+}
+
+//draw the edges
+export function drawLine(ctx, n1, n2, color, weight = null) {
+    ctx.beginPath();
+    ctx.moveTo(n1.x, n1.y);
+    ctx.lineTo(n2.x, n2.y);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    if (weight !== null) {
+        const midX = (n1.x + n2.x) / 2;
+        const midY = (n1.y + n2.y) / 2;
+        ctx.fillStyle = "black";
+        ctx.font = "12px Arial";
+        ctx.fillText(weight, midX, midY);
+    }
 }

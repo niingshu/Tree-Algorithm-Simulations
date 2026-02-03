@@ -157,10 +157,10 @@ Graph databasePersistence::loadGraph(int graphId) {
     int maxVertex = -1; //keep track of the vertex with highest value seen
     vector<tuple<int,int,int>> edges; //u,v,weight
 
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        int u = sqlite3_column_int(stmt, 0);
-        int v = sqlite3_column_int(stmt, 1);
-        int w = sqlite3_column_int(stmt, 2);
+    while (sqlite3_step(stmt2) == SQLITE_ROW) {
+        int u = sqlite3_column_int(stmt2, 0);
+        int v = sqlite3_column_int(stmt2, 1);
+        int w = sqlite3_column_int(stmt2, 2);
 
         maxVertex = max({maxVertex, u, v, w});
         edges.push_back({u,v,w});
