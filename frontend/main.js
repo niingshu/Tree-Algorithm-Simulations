@@ -43,14 +43,30 @@ function render() {
     });
 }
 
+function addEdge(u, v, weight) {
+
+    const node1 = nodes.find(n=>n.id === u);
+    const node2 = nodes.find(n=>n.id === v);
+    drawLine(node1, node2, 'black', weight);
+}
+
 function treeEdge(u, v, weight) {
-    treeEdges.push({u, v, weight});
-    render();
+    //do not need to reset the frame (since we want to keep track of the tree)
+    treeEdges.push({u,v, weight}); //edge from u to v
+
+    const node1 = nodes.find(n=>n.id === u);
+    const node2 = nodes.find(n=>n.id === v);
+    drawLine(node1, node2, 'red', weight);
+
 }
 
 function relaxEdge(u, v, weight) {
+
     relaxEdges.push({u, v, weight});
-    render();
+
+    const node1 = nodes.find(n=>n.id === u);
+    const node2 = nodes.find(n=>n.id === v);
+    drawLine(node1, node2, 'gray', weight);
 }
 
 function highlightNode(id) {
@@ -89,7 +105,7 @@ function play(events) {
 fetch("events.json")
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        //console.log(data);
         play(data.events);
 
         document.getElementById("output").textContent =
